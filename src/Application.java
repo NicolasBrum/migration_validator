@@ -1,16 +1,20 @@
-import Database.DB;
+import Database.Database;
+import Helpers.DatabaseComparator;
 import Helpers.DaoFactory;
+import Helpers.SupportedDatabases;
 
 public class Application {
 
     public static void main(String[] args) {
-        var pgConnection = DB.getPostgresConnection();
-        //var sqlServerConnection = DB.getSqlServerConnection();
 
-        //var ssDao = DaoFactory.createMssqlDAO(sqlServerConnection);
-        var pgDao = DaoFactory.createPostgresDAO(pgConnection);
-        System.out.println(pgDao.getTotalSchemas());
+        var postgresConnection = Database.getPostgresConnection();
+        var sqlServerConnection = Database.getSqlServerConnection();
 
-        DB.closeConnections();
+        var sqlServerDao = DaoFactory.createDatabaseDao(SupportedDatabases.SQLSERVER,sqlServerConnection);
+        var postgresDao = DaoFactory.createDatabaseDao(SupportedDatabases.POSTGRES,postgresConnection);
+        var comparator = new DatabaseComparator(postgresDao,sqlServerDao);
+
+        comparator.startComparison();
+        Database.closeConnections();
     }
 }

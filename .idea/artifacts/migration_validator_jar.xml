@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="migration_validator:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/migration_validator_jar</output-path>
+    <root id="archive" name="migration_validator.jar">
+      <element id="module-output" name="migration_validator" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../java_libs/postgresql-42.7.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../java_libs/mssql-jdbc-12.10.0.jre8.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../java_libs/mssql-jdbc-12.10.0.jre11.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
