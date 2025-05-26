@@ -33,4 +33,26 @@ public class MssqlMetaDataDAO implements IDatabaseMetaDataDao {
 
         return schemasSet;
     }
+
+    @Override
+    public Set<String> getTables() {
+        Set<String> tablesSet;
+        String[] types = {"TABLE"};
+
+        try(var queryResult = connection.getMetaData()
+                .getTables(null,null,"%",types)){
+
+            tablesSet = new HashSet<>();
+
+            while (queryResult.next()) {
+                if(!queryResult.getString("TABLE_SCHEM").equalsIgnoreCase("sys")){
+                    tablesSet.add(queryResult.getString("TABLE_NAME"));
+                }
+            }
+        }catch (SQLException exception){
+            throw new DatabaseException("Could not get database tables.");
+        }
+
+        return tablesSet;
+    }
 }

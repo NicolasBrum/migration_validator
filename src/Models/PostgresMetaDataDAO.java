@@ -27,9 +27,28 @@ public class PostgresMetaDataDAO implements IDatabaseMetaDataDao {
                 schemasSet.add(queryResult.getString("TABLE_SCHEM"));
             }
         }catch (SQLException exception) {
-            throw new DatabaseException("Could not get database schema.");
+            throw new DatabaseException(exception.getMessage());
         }
 
         return schemasSet;
+    }
+
+    @Override
+    public Set<String> getTables() {
+        Set<String> tablesSet;
+        String[] types = {"TABLE"};
+
+        try(var queryResult = connection.getMetaData().getTables(null,null,"%",types)){
+
+            tablesSet = new HashSet<>();
+
+            while (queryResult.next()) {
+                tablesSet.add(queryResult.getString("TABLE_NAME"));
+            }
+        }catch (SQLException exception){
+            throw new DatabaseException("Could not get database tables.");
+        }
+
+        return tablesSet;
     }
 }
