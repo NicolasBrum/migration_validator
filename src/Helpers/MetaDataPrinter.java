@@ -11,7 +11,6 @@ public class MetaDataPrinter {
                 String schema = resultSet.getString("TABLE_SCHEM");
                 System.out.println("Schema: " + schema);
             }
-
         }catch (SQLException e) {
             e.printStackTrace();
         }
